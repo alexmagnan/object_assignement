@@ -24,7 +24,7 @@ class ViewController: UIViewController,OptionSetting{
         //Reset the variables
         drawingView.shapes = [Shape]();
         drawingView.tmpShape = Shape(X:0,Y:0,mOptions:mOptions);
-        drawingView.tmpLines = [Line]()
+        drawingView.multiLineFirst = true
         //Empty the screen
         drawingView.setNeedsDisplay();
         
@@ -53,8 +53,27 @@ class ViewController: UIViewController,OptionSetting{
         saveBTN.enabled = true;
     }
     @IBAction func UndoShape(sender: AnyObject) {
-        
-        if drawingView.shapes.count > 0{
+        if shapeType == 4{
+            let tmpMirror = Mirror(reflecting: drawingView.tmpShape)
+            if tmpMirror.subjectType == Custom.self {
+                let customShape = drawingView.tmpShape as! Custom
+                var points = customShape.points
+                points.popLast()
+                if points.count == 0 {
+                    drawingView.tmpShape = Shape(X:0,Y:0, mOptions: Options())
+                }
+                else {
+                    drawingView.tmpShape = Custom(X: drawingView.tmpShape.X, Y: drawingView.tmpShape.Y, mOptions: mOptions, points: points)
+                }
+                drawingView.setNeedsDisplay();
+            }
+            else {
+                drawingView.shapes.removeLast()
+                //Redraw the shapes now that they are loaded
+                drawingView.setNeedsDisplay();
+            }
+        }
+        else if drawingView.shapes.count > 0{
             drawingView.shapes.removeLast()
             //Redraw the shapes now that they are loaded
             drawingView.setNeedsDisplay();
@@ -98,7 +117,7 @@ class ViewController: UIViewController,OptionSetting{
         }
         
         
-        let tap = UITapGestureRecognizer(target: self, action: "doubleTapped")
+        let tap = UITapGestureRecognizer(target: drawingView, action: "doubleTapped")
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
         //TODO: enable save and erase only when needed
@@ -121,26 +140,6 @@ class ViewController: UIViewController,OptionSetting{
        drawingView.doubleTapped()
     }
     
-//
-//    func prepareMove(){
-//        if drawingView.selectorMode {
-//            eraseBTN.enabled = false
-//            undoBTN.enabled = false
-//            saveBTN.enabled = false
-//            loadBTN.enabled = false
-//            optionsBTN.enabled = false
-//        }
-//        else {
-//            loadBTN.enabled = true
-//            optionsBTN.enabled = true
-//            if drawingView.shapes.count != 0 {
-//                eraseBTN.enabled = true
-//                undoBTN.enabled = true
-//                saveBTN.enabled = true
-//            }
-//        }
-//        
-//    }
     func getOptions() -> Options {
         return mOptions
     }

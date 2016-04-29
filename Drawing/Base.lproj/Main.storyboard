@@ -27,21 +27,6 @@
                                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="npa-y2-sH3">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                                 <items>
-                                                    <barButtonItem style="plain" id="XSm-4c-cgQ">
-                                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Dd6-8H-DHR">
-                                                            <rect key="frame" x="20" y="7" width="215" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <segments>
-                                                                <segment title="Rect"/>
-                                                                <segment title="Oval"/>
-                                                                <segment title="Line"/>
-                                                                <segment title="Custom"/>
-                                                            </segments>
-                                                            <connections>
-                                                                <action selector="changeShape:" destination="BYZ-38-t0r" eventType="valueChanged" id="ghE-Ut-ENU"/>
-                                                            </connections>
-                                                        </segmentedControl>
-                                                    </barButtonItem>
                                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YWh-1C-Fkc"/>
                                                     <barButtonItem style="plain" id="58O-a9-on7">
                                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Slv-Iu-G2x">
@@ -64,9 +49,29 @@
                                 </subviews>
                             </stackView>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="whx-uE-SBF" customClass="DrawingView" customModule="Drawing" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="600" height="484"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="483"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QB6-DD-7HD">
+                                        <rect key="frame" x="8" y="447" width="584" height="29"/>
+                                        <segments>
+                                            <segment title="Rect"/>
+                                            <segment title="Oval"/>
+                                            <segment title="Line"/>
+                                            <segment title="Custom Line"/>
+                                            <segment title="Multi-Line"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="changeShape:" destination="BYZ-38-t0r" eventType="valueChanged" id="gcA-0z-fnd"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="QB6-DD-7HD" firstAttribute="leading" secondItem="whx-uE-SBF" secondAttribute="leadingMargin" id="1Qe-US-XYJ"/>
+                                    <constraint firstItem="QB6-DD-7HD" firstAttribute="trailing" secondItem="whx-uE-SBF" secondAttribute="trailingMargin" id="OFC-RI-3mz"/>
+                                    <constraint firstAttribute="bottom" secondItem="QB6-DD-7HD" secondAttribute="bottom" id="RoB-Gg-THi"/>
+                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="You-Vl-5zh" appends="YES" id="mtQ-W6-kg8"/>
                                 </connections>
@@ -74,13 +79,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DVO-zj-uIv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2bZ-Xr-Rqd"/>
-                            <constraint firstAttribute="trailing" secondItem="whx-uE-SBF" secondAttribute="trailing" id="32x-Zg-p74"/>
-                            <constraint firstItem="whx-uE-SBF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="D2m-7U-J0w"/>
-                            <constraint firstItem="DVO-zj-uIv" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="IL4-Uu-z8o"/>
-                            <constraint firstItem="DVO-zj-uIv" firstAttribute="top" secondItem="whx-uE-SBF" secondAttribute="bottom" id="bad-Hr-zYU"/>
-                            <constraint firstItem="whx-uE-SBF" firstAttribute="leading" secondItem="DVO-zj-uIv" secondAttribute="leading" id="ebO-xs-pQ3"/>
-                            <constraint firstItem="whx-uE-SBF" firstAttribute="trailing" secondItem="DVO-zj-uIv" secondAttribute="trailing" id="py9-Ix-TzT"/>
+                            <constraint firstAttribute="trailing" secondItem="DVO-zj-uIv" secondAttribute="trailing" id="78n-4m-9Q5"/>
+                            <constraint firstItem="whx-uE-SBF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Byg-hI-hwu"/>
+                            <constraint firstItem="DVO-zj-uIv" firstAttribute="top" secondItem="whx-uE-SBF" secondAttribute="bottom" constant="9" id="Par-L0-37k"/>
+                            <constraint firstItem="whx-uE-SBF" firstAttribute="leading" secondItem="DVO-zj-uIv" secondAttribute="leading" id="WFB-G8-Odd"/>
+                            <constraint firstItem="whx-uE-SBF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aRW-85-XGq"/>
+                            <constraint firstItem="whx-uE-SBF" firstAttribute="trailing" secondItem="DVO-zj-uIv" secondAttribute="trailing" id="e3T-BR-b3t"/>
+                            <constraint firstItem="DVO-zj-uIv" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="uSm-R7-HU0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lKq-lT-8xX">

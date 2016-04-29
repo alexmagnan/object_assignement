@@ -23,7 +23,7 @@ class Custom:Shape {
         var components: [CGFloat] = mOptions.components[0]
         var color = CGColorCreate(colorSpace, components)
         
-        if(points.count > 2){
+        if(points.count > 1){
             bezierPath.moveToPoint(points[0])
             for i in 1..<points.count {
                 bezierPath.addLineToPoint(points[i])
@@ -51,50 +51,58 @@ class Custom:Shape {
         
        
     }
+    override func scale(scale: Double){
+//        for i in 0..<points.count {
+//            let Width = self.newX - X
+//            let Height = self.newY - Y
+//            let scaledWidth = Width * scale
+//            let scaledHeight = Height * scale
+//        
+//            let newX = (Width - scaledWidth)/2
+//            let newY = (Height - scaledHeight)/2
+//            self.X = self.X + newX
+//            self.Y = self.Y + newY
+//            self.newX = self.X + scaledWidth
+//            self.newY = self.Y + scaledHeight
+//        }
+        
+    }
     override func drawBorder(context: CGContext) {
-//        //We have to calculate the new border according to the width and height if they are negative or not
-//        var borderX = 0.0
-//        var borderY = 0.0
-//        var borderWidth = 0.0
-//        var borderheight = 0.0
-//        
-//        if self.Width > 0.0 && self.Height > 0.0 {
-//            borderX = self.X - 3
-//            borderY = self.Y - 3
-//            borderWidth = self.Width + 6
-//            borderheight = self.Height + 6
-//        }
-//        else if self.Width < 0.0 && self.Height < 0.0 {
-//            borderX = self.X + 3
-//            borderY = self.Y + 3
-//            borderWidth = self.Width - 6
-//            borderheight = self.Height - 6
-//        }
-//        else if self.Width > 0.0 && self.Height < 0.0 {
-//            borderX = self.X - 3
-//            borderY = self.Y + 3
-//            borderWidth = self.Width + 6
-//            borderheight = self.Height - 6
-//        }
-//        else if self.Width < 0.0 && self.Height > 0.0 {
-//            borderX = self.X + 3
-//            borderY = self.Y - 3
-//            borderWidth = self.Width - 6
-//            borderheight = self.Height + 6
-//        }
-//        
-//        let rect = CGRect(x: borderX, y: borderY, width: borderWidth, height: borderheight)
-//        
-//        let colorSpace = CGColorSpaceCreateDeviceRGB()
-//        var components: [CGFloat] = mOptions.components[0]
-//        var color = CGColorCreate(colorSpace, components)
-//        
-//        CGContextSetLineWidth(context, 1)
-//        components = mOptions.components[3]
-//        color = CGColorCreate(colorSpace, components)
-//        CGContextSetStrokeColorWithColor(context, color)
-//        CGContextAddRect(context, rect)
-//        CGContextStrokePath(context)
+        var highestX = points[0].x
+        var highestY = points[0].y
+        var lowestX = points[0].x
+        var lowestY = points[0].y
+        
+        for i in 1..<points.count {
+            if highestX < points[i].x{
+                highestX = points[i].x
+            }
+            if highestY < points[i].y{
+                highestY = points[i].y
+            }
+            if lowestX > points[i].x{
+                lowestX = points[i].x
+            }
+            if lowestY > points[i].y{
+                lowestY = points[i].y
+            }
+        }
+        
+        let borderWidth = highestX - lowestX
+        let borderHeight = highestY - lowestY
+        
+        let rect = CGRect(x: lowestX - 2, y: lowestY - 2, width: borderWidth + 4, height: borderHeight + 2)
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        var components: [CGFloat] = mOptions.components[0]
+        var color = CGColorCreate(colorSpace, components)
+        
+        CGContextSetLineWidth(context, 1)
+        components = mOptions.components[3]
+        color = CGColorCreate(colorSpace, components)
+        CGContextSetStrokeColorWithColor(context, color)
+        CGContextAddRect(context, rect)
+        CGContextStrokePath(context)
     }
     required convenience init?(coder decoder: NSCoder) {
         guard let points = decoder.decodeObjectForKey("points") as? [CGPoint],
@@ -110,21 +118,9 @@ class Custom:Shape {
             points: points
         )
     }
-    override func scale(scale: Double){
-//        let scaledWidth = self.Width * scale
-//        let scaledHeight = self.Height * scale
-//        
-//        let newX = (self.Width - scaledWidth)/2
-//        let newY = (self.Height - scaledHeight)/2
-//        self.X = self.X + newX
-//        self.Y = self.Y + newY
-//        self.Width = scaledWidth
-//        self.Height = scaledHeight
-        
-    }
     
     override func touchInShape(location: CGPoint) -> Bool{
-        if(points.count > 2){
+        if(points.count > 1){
             var highestX = points[0].x
             var highestY = points[0].y
             var lowestX = points[0].x
@@ -145,10 +141,10 @@ class Custom:Shape {
                 }
             }
             
-            let Height = highestX - lowestX
-            let Width = highestY - lowestY
+            let Width = highestX - lowestX
+            let Height = highestY - lowestY
             
-            if (CGRectContainsPoint(CGRect(x: Double(lowestX), y: Double(highestY), width: Double(Width), height: Double(Height)), CGPoint(x: location.x, y: location.y))) {
+            if (CGRectContainsPoint(CGRect(x: Double(lowestX), y: Double(lowestY), width: Double(Width), height: Double(Height)), CGPoint(x: location.x, y: location.y))) {
                 return true;
             }
 

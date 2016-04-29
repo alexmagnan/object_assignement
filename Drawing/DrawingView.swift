@@ -22,6 +22,7 @@ class DrawingView: UIView {
     var myParent:ViewController?
     var firstMove = false
     var lineFirstTouch = true;
+    var multiLineFirst = true;
     
 
     override func drawRect(rect: CGRect) {
@@ -61,30 +62,10 @@ class DrawingView: UIView {
             myParent?.eraseBTN.enabled = true;
             myParent?.saveBTN.enabled = true;
             myParent?.undoBTN.enabled = true
-//            if shapeType == 3 {
-//                if(lineFirstTouch){
-//                    //the the starting point for our shape
-//                    oriX = Double(location.x)
-//                    oriY = Double(location.y)
-//                    lineFirstTouch = false
-//                }
-//                else{
-//                    
-//                    tmpLines.append(Line(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!,newX: Double(location.x) , newY: Double(location.y)))
-//                    //the the starting point for our shape
-//                    oriX = Double(location.x)
-//                    oriY = Double(location.y)
-//                }
-//            }
-//            else{
-                //the the starting point for our shape
-             //}
-                oriX = Double(location.x)
-                oriY = Double(location.y)
-                tmpShape = returnShape(oriX, newY: oriY)
-                lineFirstTouch = false
-           
-    
+            oriX = Double(location.x)
+            oriY = Double(location.y)
+            tmpShape = returnShape(oriX, newY: oriY)
+            lineFirstTouch = false
         }
         else if myParent?.selectorType == 1 {
             shapeSelectedIndex = findShape(location)
@@ -105,7 +86,7 @@ class DrawingView: UIView {
         
         let touch = touches.first! as UITouch
         let location = touch.locationInView(self)
-        if myParent?.selectorType == 0 {
+        if myParent?.selectorType == 0 && myParent?.shapeType != 4{
             tmpShape = returnShape(Double(location.x), newY: Double(location.y))
         }
         else if myParent?.selectorType == 1 {
@@ -143,7 +124,7 @@ class DrawingView: UIView {
         
         let touch = touches.first! as UITouch
         let location = touch.locationInView(self)
-        if myParent?.selectorType == 0 {
+        if myParent?.selectorType == 0 && myParent?.shapeType != 4{
             shapes.append(returnShape(Double(location.x), newY: Double(location.y)))
             tmpShape = Shape(X:0,Y:0, mOptions: Options())
             lineFirstTouch = true
@@ -186,12 +167,28 @@ class DrawingView: UIView {
                 return Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points)
             }
             else{
+                let tmpMirror = Mirror(reflecting: tmpShape)
+                if tmpMirror.subjectType == Custom.self {
+                let customShape = tmpShape as! Custom
+                    var points = customShape.points
+                    points.append(CGPoint(x: newX, y: newY))
+                    return Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points)
+                }
+            }
+        }
+        else if shapeType == 4 {
+            if multiLineFirst {
+                var points = [CGPoint]()
+                points.append(CGPoint(x: newX, y: newY))
+                multiLineFirst = false
+                return Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points)
+            }
+            else {
                 let customShape = tmpShape as! Custom
                 var points = customShape.points
                 points.append(CGPoint(x: newX, y: newY))
                 return Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points)
             }
-            
         }
         
         return Shape(X:0,Y:0, mOptions: Options())
@@ -210,14 +207,16 @@ class DrawingView: UIView {
     }
     
     func doubleTapped(){
-//        if tmpLines.count > 1 {
-//            //Once the user double taps, we want to close the shape up from the last point to the first point
-//            //Then add it to the shapes
-//            tmpLines.append(Line(X: tmpLines[tmpLines.count-1].newX, Y: tmpLines[tmpLines.count-1].newY, mOptions: (myParent?.mOptions)!, newX: tmpLines[0].newX, newY: tmpLines[0].newY))
-//            shapes.append(Custom(X: tmpLines[0].X, Y: tmpLines[0].Y, mOptions: (myParent?.mOptions)!, lines: tmpLines))
-//            tmpLines = [Line]()
-//            lineFirstTouch = true
-//        }
+        if shapeType == 4 && (tmpShape as! Custom).points.count > 1 {
+            let customShape = tmpShape as! Custom
+            var points = customShape.points
+            points.append(CGPoint(x: points[0].x, y: points[0].y))
+            shapes.append(Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points))
+            multiLineFirst = true
+            tmpShape = Shape(X:0,Y:0, mOptions: Options())
+        }
+        self.setNeedsDisplay()
+        
     }
     
     func scaleShape(recognizer: UIPinchGestureRecognizer){
