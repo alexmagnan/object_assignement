@@ -210,6 +210,7 @@ class DrawingView: UIView {
         if shapeType == 4 && (tmpShape as! Custom).points.count > 1 {
             let customShape = tmpShape as! Custom
             var points = customShape.points
+            points.popLast()
             points.append(CGPoint(x: points[0].x, y: points[0].y))
             shapes.append(Custom(X: oriX, Y: oriY, mOptions: (myParent?.mOptions)!, points: points))
             multiLineFirst = true
