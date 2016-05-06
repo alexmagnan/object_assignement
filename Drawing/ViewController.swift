@@ -8,13 +8,100 @@
 
 import UIKit
 
+
+enum shapeTypes {
+    
+    
+    case rect
+    case oval
+    case line
+    case custom
+    
+    
+    
+
+}
+
+
 class ViewController: UIViewController,OptionSetting{
     var shapeType = 0
     var selectorType = 0;
+
+    
+    var currentShapeType = shapeTypes.line
+    
+    
     @IBOutlet var drawingView: DrawingView!
+
 
     @IBOutlet weak var saveBTN: UIBarButtonItem!
     @IBOutlet weak var loadBTN: UIBarButtonItem!
+    @IBOutlet weak var currentShapeButton: UIBarButtonItem!
+    @IBAction func changeCurrentShape(sender: AnyObject) {
+    
+    
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
+        
+        
+        let selectRect = UIAlertAction(title: "Rectangle", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.currentShapeType = .rect
+            self.currentShapeButton.title = "Rectangle"
+            self.drawingView.shapeType = 0
+            
+        })
+        let selectOval = UIAlertAction(title: "Oval", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.currentShapeType = .oval
+            self.currentShapeButton.title = "Oval"
+            self.drawingView.shapeType = 1
+        })
+        
+        let selectLine = UIAlertAction(title: "Line", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.currentShapeType = .line
+            self.currentShapeButton.title = "Line"
+            self.drawingView.shapeType = 2
+        })
+        
+        
+        
+        //
+        let selectCustom = UIAlertAction(title: "Custom", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.currentShapeType = .custom
+            self.currentShapeButton.title = "Custom"
+            self.drawingView.shapeType = 3
+            
+        })
+        
+        let selectCancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+        })
+
+        
+        // 4
+        optionMenu.addAction(selectRect)
+        optionMenu.addAction(selectLine)
+        optionMenu.addAction(selectOval)
+        optionMenu.addAction(selectCustom)
+        optionMenu.addAction(selectCancel)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+    }
+        
+    
+    
+    
+    
+    
     @IBOutlet weak var eraseBTN: UIBarButtonItem!
     @IBOutlet weak var undoBTN: UIBarButtonItem!
     
@@ -45,6 +132,7 @@ class ViewController: UIViewController,OptionSetting{
             drawingView.shapes = ((NSKeyedUnarchiver.unarchiveObjectWithData(data)) as? [Shape])!
             
         }
+        
         //Redraw the shapes now that they are loaded
         drawingView.setNeedsDisplay();
         
@@ -93,7 +181,16 @@ class ViewController: UIViewController,OptionSetting{
     }
     @IBAction func Save(sender: AnyObject)
     {
+        
+        /* Create the binary data */
+        
         let data = NSKeyedArchiver.archivedDataWithRootObject(drawingView.shapes)
+        
+        //TODO - Write it to the database
+        
+        
+        
+        
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: "shapes")
         loadBTN.enabled = true;
     }
@@ -110,7 +207,13 @@ class ViewController: UIViewController,OptionSetting{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentShapeType = shapeTypes.rect
+        
         drawingView.myParent = self;
+        
+        currentShapeButton.title = "Rectangle"
+        
+        
         
         if let data = NSUserDefaults.standardUserDefaults().objectForKey("shapes") as? NSData {
             loadBTN.enabled = true;
@@ -119,7 +222,7 @@ class ViewController: UIViewController,OptionSetting{
         
         let tap = UITapGestureRecognizer(target: drawingView, action: "doubleTapped")
         tap.numberOfTapsRequired = 2
-        view.addGestureRecognizer(tap)
+        drawingView.addGestureRecognizer(tap)
         //TODO: enable save and erase only when needed
 //        eraseBTN.enabled = true;
 //        saveBTN.enabled = true;
@@ -132,8 +235,17 @@ class ViewController: UIViewController,OptionSetting{
         // Dispose of any resources that can be recreated.
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let viewController:OptionsController = segue.destinationViewController as! OptionsController
-        viewController.delegate = self
+        
+        if segue.identifier == "showOptions" {
+        
+            let viewController:OptionsController = segue.destinationViewController as! OptionsController
+            viewController.delegate = self
+                
+        } else if segue.identifier == "showLoading" {
+            
+            
+            
+        }
     }
     
     func doubleTapped() {

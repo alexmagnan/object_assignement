@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xMA-L7-2Wb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xMA-L7-2Wb">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -27,6 +27,11 @@
                                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="npa-y2-sH3">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                                 <items>
+                                                    <barButtonItem title="Rectangle" id="TX4-Os-1Wz">
+                                                        <connections>
+                                                            <action selector="changeCurrentShape:" destination="BYZ-38-t0r" id="jZE-LV-NP8"/>
+                                                        </connections>
+                                                    </barButtonItem>
                                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YWh-1C-Fkc"/>
                                                     <barButtonItem style="plain" id="58O-a9-on7">
                                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Slv-Iu-G2x">
@@ -50,28 +55,8 @@
                             </stackView>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="whx-uE-SBF" customClass="DrawingView" customModule="Drawing" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="600" height="483"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QB6-DD-7HD">
-                                        <rect key="frame" x="8" y="447" width="584" height="29"/>
-                                        <segments>
-                                            <segment title="Rect"/>
-                                            <segment title="Oval"/>
-                                            <segment title="Line"/>
-                                            <segment title="Custom Line"/>
-                                            <segment title="Multi-Line"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="changeShape:" destination="BYZ-38-t0r" eventType="valueChanged" id="gcA-0z-fnd"/>
-                                        </connections>
-                                    </segmentedControl>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="QB6-DD-7HD" firstAttribute="leading" secondItem="whx-uE-SBF" secondAttribute="leadingMargin" id="1Qe-US-XYJ"/>
-                                    <constraint firstItem="QB6-DD-7HD" firstAttribute="trailing" secondItem="whx-uE-SBF" secondAttribute="trailingMargin" id="OFC-RI-3mz"/>
-                                    <constraint firstAttribute="bottom" secondItem="QB6-DD-7HD" secondAttribute="bottom" id="RoB-Gg-THi"/>
-                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="You-Vl-5zh" appends="YES" id="mtQ-W6-kg8"/>
                                 </connections>
@@ -90,63 +75,36 @@
                     </view>
                     <navigationItem key="navigationItem" id="lKq-lT-8xX">
                         <leftBarButtonItems>
-                            <barButtonItem style="plain" id="B6q-nZ-kXt">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SrX-3Z-ySv">
-                                    <rect key="frame" x="20" y="7" width="39" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Erase"/>
-                                    <connections>
-                                        <action selector="Erase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f0e-7w-x3I"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem title="Undo" id="Fko-Tx-SFY">
+                            <barButtonItem title="Undo" id="7Ut-kc-eFt">
                                 <connections>
-                                    <action selector="UndoShape:" destination="BYZ-38-t0r" id="4SW-Ao-7RD"/>
+                                    <action selector="UndoShape:" destination="BYZ-38-t0r" id="R6T-dS-Uks"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Erase" id="KKg-hI-AQf"/>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
-                            <barButtonItem style="plain" id="h1G-li-gk7" userLabel="OptionBTN">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ryd-C4-PVM" userLabel="Options">
-                                    <rect key="frame" x="526" y="7" width="54" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <accessibility key="accessibilityConfiguration" label="Options"/>
-                                    <state key="normal" title="Options"/>
-                                    <connections>
-                                        <segue destination="NIO-Fy-mI5" kind="presentation" id="CrR-Ch-jeJ"/>
-                                    </connections>
-                                </button>
+                            <barButtonItem title="Debug" id="kRu-hf-Qcs">
+                                <connections>
+                                    <segue destination="phD-Pt-qah" kind="show" identifier="showLoading" id="8Ct-oH-bsq"/>
+                                </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" id="6WS-AB-KMu">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jTD-n1-0ps">
-                                    <rect key="frame" x="484" y="7" width="34" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Load"/>
-                                    <connections>
-                                        <action selector="Load:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xKU-s2-IyN"/>
-                                    </connections>
-                                </button>
+                            <barButtonItem title="Options" id="GJg-nt-RcJ">
+                                <connections>
+                                    <segue destination="NIO-Fy-mI5" kind="presentation" identifier="showOptions" id="cFw-bu-vG8"/>
+                                </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" id="K8n-DO-ms5">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Bg-f3-Fm7">
-                                    <rect key="frame" x="442" y="7" width="34" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Save"/>
-                                    <connections>
-                                        <action selector="Save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BIz-t8-EIU"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
+                            <barButtonItem title="Load" id="Mm3-5d-tBu"/>
+                            <barButtonItem title="Save" id="C0J-8j-kGD"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="currentShapeButton" destination="TX4-Os-1Wz" id="eSl-gw-hEe"/>
                         <outlet property="drawingView" destination="whx-uE-SBF" id="j9f-yw-V7j"/>
-                        <outlet property="eraseBTN" destination="B6q-nZ-kXt" id="Fyv-Fq-WW9"/>
-                        <outlet property="loadBTN" destination="6WS-AB-KMu" id="zRe-IA-e78"/>
-                        <outlet property="optionsBTN" destination="h1G-li-gk7" id="0pq-kM-H76"/>
-                        <outlet property="saveBTN" destination="K8n-DO-ms5" id="OH1-Ui-J14"/>
-                        <outlet property="undoBTN" destination="Fko-Tx-SFY" id="IDZ-7P-vLh"/>
+                        <outlet property="eraseBTN" destination="KKg-hI-AQf" id="nQV-NN-cKq"/>
+                        <outlet property="loadBTN" destination="Mm3-5d-tBu" id="hsh-xP-HPG"/>
+                        <outlet property="optionsBTN" destination="GJg-nt-RcJ" id="CTp-DA-PeB"/>
+                        <outlet property="saveBTN" destination="C0J-8j-kGD" id="Mfc-WA-gQ7"/>
+                        <outlet property="undoBTN" destination="7Ut-kc-eFt" id="UFe-gt-dbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -157,6 +115,34 @@
                 </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1361" y="477"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="vgg-8W-VT7">
+            <objects>
+                <tableViewController id="phD-Pt-qah" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aY3-Xf-eDt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yaa-oy-MsU">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaa-oy-MsU" id="ECj-Uz-kmY">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="phD-Pt-qah" id="xZy-fl-OyD"/>
+                            <outlet property="delegate" destination="phD-Pt-qah" id="Ri0-dK-2Lf"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Vf-28-wGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2102" y="477"/>
         </scene>
         <!--Options Controller-->
         <scene sceneID="NQG-ED-HBM">
