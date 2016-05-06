@@ -7,32 +7,28 @@
 //
 
 import UIKit
-
+import CoreData
 
 enum shapeTypes {
-    
     
     case rect
     case oval
     case line
     case custom
     
-    
-    
-
 }
 
 
 class ViewController: UIViewController,OptionSetting{
     var shapeType = 0
     var selectorType = 0;
-
     
+    var drawings = [NSManagedObject]()
+
+
     var currentShapeType = shapeTypes.line
     
-    
     @IBOutlet var drawingView: DrawingView!
-
 
     @IBOutlet weak var saveBTN: UIBarButtonItem!
     @IBOutlet weak var loadBTN: UIBarButtonItem!
@@ -68,8 +64,6 @@ class ViewController: UIViewController,OptionSetting{
         })
         
         
-        
-        //
         let selectCustom = UIAlertAction(title: "Custom", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             
@@ -96,11 +90,6 @@ class ViewController: UIViewController,OptionSetting{
         self.presentViewController(optionMenu, animated: true, completion: nil)
         
     }
-        
-    
-    
-    
-    
     
     @IBOutlet weak var eraseBTN: UIBarButtonItem!
     @IBOutlet weak var undoBTN: UIBarButtonItem!
@@ -182,13 +171,28 @@ class ViewController: UIViewController,OptionSetting{
     @IBAction func Save(sender: AnyObject)
     {
         
+        let alert = UIAlertController(title: nil,
+                                      message: "Save Drawing",
+                                      preferredStyle: .Alert)
+        
+        //alert.addTextFieldWithConfigurationHandler(nil)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+
+        
+        //textField!.placeholder = "Enter an Item"
+        //println(textField!.text)
+        
+        
+        
+        
+        
         /* Create the binary data */
         
         let data = NSKeyedArchiver.archivedDataWithRootObject(drawingView.shapes)
         
         //TODO - Write it to the database
-        
-        
         
         
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: "shapes")
@@ -206,6 +210,60 @@ class ViewController: UIViewController,OptionSetting{
     @IBOutlet weak var optionsBTN: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        //MARK: Core Data Save
+        
+        //1
+        let appDelegate =
+            UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let entity =  NSEntityDescription.entityForName("Drawing",
+                                                        inManagedObjectContext:managedContext)
+        
+        let drawing = NSManagedObject(entity: entity!,
+                                     insertIntoManagedObjectContext: managedContext)
+        
+        //3
+        drawing.setValue("foobar", forKey: "name")
+        
+        //4
+        do {
+            try managedContext.save()
+            //5
+            drawings.append(drawing)
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+        
+        //MARK: Core Data Load
+    
+        var newData = [NSManagedObject]()
+        
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "Drawing")
+        
+        //3
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            newData = results as! [NSManagedObject]
+            
+            print(newData)
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        
+        
+        //MARK: Other stuff
         
         currentShapeType = shapeTypes.rect
         
