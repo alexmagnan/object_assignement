@@ -115,12 +115,48 @@ class ViewController: UIViewController,OptionSetting{
     {
         //Clear the screen before restoring shapes
         Erase(sender)
+
         
         //Get the shapes from the Archiver
-        if let data = NSUserDefaults.standardUserDefaults().objectForKey("shapes") as? NSData {
-            drawingView.shapes = ((NSKeyedUnarchiver.unarchiveObjectWithData(data)) as? [Shape])!
+        
+        //MARK: Core Data Load
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        var newData = [NSManagedObject]()
+        
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "Drawing")
+        
+        let name = "shit"
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        
+        //TODO: Get the shapes array from the fetch
+        //TODO: Get the image perview from the fetch
+        do {
+            let results =
+                try managedContext.executeFetchRequest(fetchRequest)
+            newData = results as! [NSManagedObject]
             
+            
+            
+            
+            
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
         }
+
+        
+    
+//        
+//        if let data = NSUserDefaults.standardUserDefaults().objectForKey("shapes") as? NSData {
+//            drawingView.shapes = ((NSKeyedUnarchiver.unarchiveObjectWithData(data)) as? [Shape])!
+//        }
         
         //Redraw the shapes now that they are loaded
         drawingView.setNeedsDisplay();
@@ -170,32 +206,75 @@ class ViewController: UIViewController,OptionSetting{
     }
     @IBAction func Save(sender: AnyObject)
     {
-        
-        let alert = UIAlertController(title: nil,
-                                      message: "Save Drawing",
+
+        //MARK: Save alert
+        let alert = UIAlertController(title: "New Name",
+                                      message: "Add a new name",
                                       preferredStyle: .Alert)
         
-        //alert.addTextFieldWithConfigurationHandler(nil)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-        
+        let saveAction = UIAlertAction(title: "Save", style: .Default, handler: {
+            (action:UIAlertAction) -> Void in
+                                        
+            let textField = alert.textFields!.first
+            
+            //TODO: Put this in its own function maybe
+            
+            let appDelegate =
+                UIApplication.sharedApplication().delegate as! AppDelegate
 
+            let managedContext = appDelegate.managedObjectContext
+
+            let entity =  NSEntityDescription.entityForName("Drawing",
+                inManagedObjectContext:managedContext)
+
+            let drawing = NSManagedObject(entity: entity!,
+                insertIntoManagedObjectContext: managedContext)
+
+            let shapes = NSKeyedArchiver.archivedDataWithRootObject(self.drawingView.shapes)
+            
+            print(shapes)
+            
+            let previewImage = UIImage(view: self.drawingView)
+            
+            drawing.setValue(textField!.text!, forKey: "name")
+            drawing.setValue(shapes, forKey: "shapes")
+            //drawing.setValue(previewImage, forKey: "previewImage")
+            
+
+            //4
+            do {
+                try managedContext.save()
+                //5
+                self.drawings.append(drawing)
+            } catch let error as NSError  {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+                                        
+        })
         
-        //textField!.placeholder = "Enter an Item"
-        //println(textField!.text)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) {
+            (action: UIAlertAction) -> Void in
         
+        }
         
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField) -> Void in
+        }
         
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
         
+        presentViewController(alert, animated: false, completion: nil)
+
         
         /* Create the binary data */
         
-        let data = NSKeyedArchiver.archivedDataWithRootObject(drawingView.shapes)
+        
         
         //TODO - Write it to the database
         
         
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: "shapes")
+        //NSUserDefaults.standardUserDefaults().setObject(data, forKey: "shapes")
         loadBTN.enabled = true;
     }
     @IBAction func changeShape(sender: UISegmentedControl) {
@@ -212,59 +291,6 @@ class ViewController: UIViewController,OptionSetting{
         super.viewDidLoad()
         
         
-        //MARK: Core Data Save
-        
-        //1
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        let managedContext = appDelegate.managedObjectContext
-        
-        //2
-        let entity =  NSEntityDescription.entityForName("Drawing",
-                                                        inManagedObjectContext:managedContext)
-        
-        let drawing = NSManagedObject(entity: entity!,
-                                     insertIntoManagedObjectContext: managedContext)
-        
-        //3
-        drawing.setValue("foobar", forKey: "name")
-        
-        //4
-        do {
-            try managedContext.save()
-            //5
-            drawings.append(drawing)
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        }
-        
-        
-        //MARK: Core Data Load
-    
-        var newData = [NSManagedObject]()
-        
-        
-        //2
-        let fetchRequest = NSFetchRequest(entityName: "Drawing")
-        
-        //3
-        do {
-            let results =
-                try managedContext.executeFetchRequest(fetchRequest)
-            newData = results as! [NSManagedObject]
-            
-            print(newData)
-            
-            
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-        
-        
-        
-        //MARK: Other stuff
-        
         currentShapeType = shapeTypes.rect
         
         drawingView.myParent = self;
@@ -272,13 +298,13 @@ class ViewController: UIViewController,OptionSetting{
         currentShapeButton.title = "Rectangle"
         
         
-        
+        //TODO: Change this to core data implementation
         if let data = NSUserDefaults.standardUserDefaults().objectForKey("shapes") as? NSData {
             loadBTN.enabled = true;
         }
         
         
-        let tap = UITapGestureRecognizer(target: drawingView, action: "doubleTapped")
+        let tap = UITapGestureRecognizer(target: drawingView, action: #selector(ViewController.doubleTapped))
         tap.numberOfTapsRequired = 2
         drawingView.addGestureRecognizer(tap)
         //TODO: enable save and erase only when needed
@@ -319,6 +345,9 @@ class ViewController: UIViewController,OptionSetting{
     func getShapeType() -> NSInteger{
         return shapeType
     }
+    
+    
+    
 
 }
 

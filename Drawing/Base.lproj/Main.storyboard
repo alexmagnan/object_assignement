@@ -97,7 +97,11 @@
                                     <segue destination="NIO-Fy-mI5" kind="presentation" identifier="showOptions" id="cFw-bu-vG8"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Load" id="Mm3-5d-tBu"/>
+                            <barButtonItem title="Load" id="Mm3-5d-tBu">
+                                <connections>
+                                    <action selector="Load:" destination="BYZ-38-t0r" id="UO5-Pf-SgT"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Save" id="C0J-8j-kGD">
                                 <connections>
                                     <action selector="Save:" destination="BYZ-38-t0r" id="IBT-su-JpP"/>
@@ -137,7 +141,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaa-oy-MsU" id="ECj-Uz-kmY">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

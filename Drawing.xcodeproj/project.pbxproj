@@ -12,6 +12,7 @@
 		1743A52A1C776B2900D21581 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1743A5291C776B2900D21581 /* Line.swift */; };
 		174FD2BC1C7F73F400888A94 /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174FD2BB1C7F73F400888A94 /* OptionsController.swift */; };
 		3F0ED5681CCA7D4600DCFC58 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0ED5671CCA7D4600DCFC58 /* Custom.swift */; };
+		501C2ED71CDD60B7002C11BC /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C2ED61CDD60B7002C11BC /* UIImageExtensions.swift */; };
 		5048B07D1CDC0BCB006B7FA6 /* Shape.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5048B07B1CDC0BCB006B7FA6 /* Shape.xcdatamodeld */; };
 		8301EBA81C6C06AD005F7DA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8301EBA71C6C06AD005F7DA7 /* AppDelegate.swift */; };
 		8301EBAA1C6C06AD005F7DA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8301EBA91C6C06AD005F7DA7 /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 		1743A5291C776B2900D21581 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		174FD2BB1C7F73F400888A94 /* OptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
 		3F0ED5671CCA7D4600DCFC58 /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
+		501C2ED61CDD60B7002C11BC /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		5048B07C1CDC0BCB006B7FA6 /* Shape.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shape.xcdatamodel; sourceTree = "<group>"; };
 		8301EBA41C6C06AD005F7DA7 /* Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drawing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8301EBA71C6C06AD005F7DA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		501C2ED31CDD607D002C11BC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5048B07B1CDC0BCB006B7FA6 /* Shape.xcdatamodeld */,
+				1743A5291C776B2900D21581 /* Line.swift */,
+				8301EBBB1C6C0812005F7DA7 /* Shape.swift */,
+				8301EBBD1C6C0897005F7DA7 /* Rect.swift */,
+				83CE6E221C6C0BB80050A876 /* Oval.swift */,
+				17386F121C91E73500DD0B05 /* Options.swift */,
+				3F0ED5671CCA7D4600DCFC58 /* Custom.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		501C2ED41CDD6082002C11BC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8301EBA91C6C06AD005F7DA7 /* ViewController.swift */,
+				8301EBB91C6C06C8005F7DA7 /* DrawingView.swift */,
+				17386F101C91E60700DD0B05 /* PreviewView.swift */,
+				174FD2BB1C7F73F400888A94 /* OptionsController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		501C2ED51CDD60A5002C11BC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				501C2ED61CDD60B7002C11BC /* UIImageExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		8301EB9B1C6C06AD005F7DA7 = {
 			isa = PBXGroup;
 			children = (
@@ -74,22 +109,14 @@
 		8301EBA61C6C06AD005F7DA7 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
-				1743A5291C776B2900D21581 /* Line.swift */,
+				501C2ED51CDD60A5002C11BC /* Extensions */,
+				501C2ED41CDD6082002C11BC /* ViewControllers */,
+				501C2ED31CDD607D002C11BC /* Models */,
 				8301EBA71C6C06AD005F7DA7 /* AppDelegate.swift */,
-				8301EBA91C6C06AD005F7DA7 /* ViewController.swift */,
-				174FD2BB1C7F73F400888A94 /* OptionsController.swift */,
 				8301EBAB1C6C06AD005F7DA7 /* Main.storyboard */,
 				8301EBAE1C6C06AD005F7DA7 /* Assets.xcassets */,
 				8301EBB01C6C06AD005F7DA7 /* LaunchScreen.storyboard */,
 				8301EBB31C6C06AD005F7DA7 /* Info.plist */,
-				8301EBB91C6C06C8005F7DA7 /* DrawingView.swift */,
-				8301EBBB1C6C0812005F7DA7 /* Shape.swift */,
-				8301EBBD1C6C0897005F7DA7 /* Rect.swift */,
-				83CE6E221C6C0BB80050A876 /* Oval.swift */,
-				17386F101C91E60700DD0B05 /* PreviewView.swift */,
-				17386F121C91E73500DD0B05 /* Options.swift */,
-				3F0ED5671CCA7D4600DCFC58 /* Custom.swift */,
-				5048B07B1CDC0BCB006B7FA6 /* Shape.xcdatamodeld */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
@@ -170,6 +197,7 @@
 				3F0ED5681CCA7D4600DCFC58 /* Custom.swift in Sources */,
 				5048B07D1CDC0BCB006B7FA6 /* Shape.xcdatamodeld in Sources */,
 				17386F111C91E60700DD0B05 /* PreviewView.swift in Sources */,
+				501C2ED71CDD60B7002C11BC /* UIImageExtensions.swift in Sources */,
 				174FD2BC1C7F73F400888A94 /* OptionsController.swift in Sources */,
 				8301EBA81C6C06AD005F7DA7 /* AppDelegate.swift in Sources */,
 				83CE6E231C6C0BB80050A876 /* Oval.swift in Sources */,
