@@ -32,10 +32,10 @@
                                                             <action selector="changeCurrentShape:" destination="BYZ-38-t0r" id="jZE-LV-NP8"/>
                                                         </connections>
                                                     </barButtonItem>
-                                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="YWh-1C-Fkc"/>
+                                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="s5C-pL-ubJ"/>
                                                     <barButtonItem style="plain" id="58O-a9-on7">
                                                         <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Slv-Iu-G2x">
-                                                            <rect key="frame" x="393" y="7" width="187" height="30"/>
+                                                            <rect key="frame" x="206" y="7" width="187" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <segments>
                                                                 <segment title="Draw"/>
@@ -46,6 +46,12 @@
                                                                 <action selector="ChangeType:" destination="BYZ-38-t0r" eventType="valueChanged" id="0b9-5A-YUc"/>
                                                             </connections>
                                                         </segmentedControl>
+                                                    </barButtonItem>
+                                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="nXj-w3-Ps9"/>
+                                                    <barButtonItem title="Options" id="GJg-nt-RcJ">
+                                                        <connections>
+                                                            <segue destination="NIO-Fy-mI5" kind="presentation" identifier="showOptions" id="cFw-bu-vG8"/>
+                                                        </connections>
                                                     </barButtonItem>
                                                 </items>
                                             </toolbar>
@@ -92,11 +98,6 @@
                                     <segue destination="phD-Pt-qah" kind="show" identifier="showLoading" id="8Ct-oH-bsq"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Options" id="GJg-nt-RcJ">
-                                <connections>
-                                    <segue destination="NIO-Fy-mI5" kind="presentation" identifier="showOptions" id="cFw-bu-vG8"/>
-                                </connections>
-                            </barButtonItem>
                             <barButtonItem title="Load" id="Mm3-5d-tBu">
                                 <connections>
                                     <action selector="Load:" destination="BYZ-38-t0r" id="UO5-Pf-SgT"/>
@@ -128,22 +129,56 @@
             </objects>
             <point key="canvasLocation" x="1361" y="477"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Load A Drawing-->
         <scene sceneID="vgg-8W-VT7">
             <objects>
-                <tableViewController id="phD-Pt-qah" sceneMemberID="viewController">
+                <tableViewController title="Load A Drawing" id="phD-Pt-qah" customClass="LoadingTableViewController" customModule="Drawing" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aY3-Xf-eDt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="NcS-tK-iaJ">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yaa-oy-MsU">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drawingPreviewCell" rowHeight="150" id="yaa-oy-MsU" customClass="LoadingViewTableCell" customModule="Drawing" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaa-oy-MsU" id="ECj-Uz-kmY">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ur3-cL-hd0">
+                                            <rect key="frame" x="15" y="11" width="100" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="LUc-aG-Yzk"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Best Drawing Ever" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bon-1g-FEI">
+                                            <rect key="frame" x="123" y="64" width="313" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="313" id="F91-dw-8OC"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Bon-1g-FEI" firstAttribute="leading" secondItem="ur3-cL-hd0" secondAttribute="trailing" constant="8" symbolic="YES" id="0YN-LN-EkK"/>
+                                        <constraint firstItem="ur3-cL-hd0" firstAttribute="centerY" secondItem="ECj-Uz-kmY" secondAttribute="centerY" id="Kqh-05-XYh"/>
+                                        <constraint firstItem="ur3-cL-hd0" firstAttribute="top" secondItem="ECj-Uz-kmY" secondAttribute="topMargin" constant="3" id="ZyT-VK-MEj"/>
+                                        <constraint firstItem="Bon-1g-FEI" firstAttribute="top" secondItem="ECj-Uz-kmY" secondAttribute="topMargin" constant="56" id="cia-qj-7Ra"/>
+                                        <constraint firstItem="ur3-cL-hd0" firstAttribute="leading" secondItem="ECj-Uz-kmY" secondAttribute="leadingMargin" constant="7" id="fQl-gp-mye"/>
+                                        <constraint firstItem="ur3-cL-hd0" firstAttribute="centerY" secondItem="Bon-1g-FEI" secondAttribute="centerY" id="v0T-4m-GrS"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="drawingTitle" destination="Bon-1g-FEI" id="YCq-AT-AAh"/>
+                                    <outlet property="previewImage" destination="ur3-cL-hd0" id="Sr1-5k-eFk"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -151,6 +186,9 @@
                             <outlet property="delegate" destination="phD-Pt-qah" id="Ri0-dK-2Lf"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="searchBar" destination="NcS-tK-iaJ" id="5a4-kB-gPE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Vf-28-wGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

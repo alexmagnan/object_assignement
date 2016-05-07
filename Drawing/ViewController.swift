@@ -36,7 +36,7 @@ class ViewController: UIViewController,OptionSetting{
     @IBAction func changeCurrentShape(sender: AnyObject) {
     
     
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Choose Shape Type", preferredStyle: .ActionSheet)
         
         
         let selectRect = UIAlertAction(title: "Rectangle", style: .Default, handler: {
@@ -121,35 +121,38 @@ class ViewController: UIViewController,OptionSetting{
         
         //MARK: Core Data Load
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        
+//        let managedContext = appDelegate.managedObjectContext
+//        
+//        var newData = [NSManagedObject]()
+//        
+//        
+//        
+//        //2
+//        let fetchRequest = NSFetchRequest(entityName: "Drawing")
+//        
+//        let name = "shit"
+//        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+//        
+//        //TODO: Get the shapes array from the fetch
+//        //TODO: Get the image perview from the fetch
+//        do {
+//            let results =
+//                try managedContext.executeFetchRequest(fetchRequest)
+//            newData = results as! [NSManagedObject]
         
-        let managedContext = appDelegate.managedObjectContext
         
-        var newData = [NSManagedObject]()
+            
+//            for var i in newData {
+//            
+//                print(i.valueForKey("name"))
+//                
+//            }
         
-        
-        //2
-        let fetchRequest = NSFetchRequest(entityName: "Drawing")
-        
-        let name = "shit"
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-        
-        //TODO: Get the shapes array from the fetch
-        //TODO: Get the image perview from the fetch
-        do {
-            let results =
-                try managedContext.executeFetchRequest(fetchRequest)
-            newData = results as! [NSManagedObject]
-            
-            
-            
-            
-            
-            
-            
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
 
         
     
@@ -232,13 +235,14 @@ class ViewController: UIViewController,OptionSetting{
 
             let shapes = NSKeyedArchiver.archivedDataWithRootObject(self.drawingView.shapes)
             
-            print(shapes)
+            let previewImageTmp = UIImage(view: self.drawingView)
             
-            let previewImage = UIImage(view: self.drawingView)
+            let previewImage = UIImagePNGRepresentation(previewImageTmp)
+            
             
             drawing.setValue(textField!.text!, forKey: "name")
             drawing.setValue(shapes, forKey: "shapes")
-            //drawing.setValue(previewImage, forKey: "previewImage")
+            drawing.setValue(previewImage, forKey: "previewImage")
             
 
             //4
@@ -327,6 +331,7 @@ class ViewController: UIViewController,OptionSetting{
                 
         } else if segue.identifier == "showLoading" {
             
+            self.navigationController?.view.backgroundColor = UIColor.whiteColor();
             
             
         }

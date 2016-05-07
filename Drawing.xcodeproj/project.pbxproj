@@ -11,6 +11,8 @@
 		17386F131C91E73500DD0B05 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17386F121C91E73500DD0B05 /* Options.swift */; };
 		1743A52A1C776B2900D21581 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1743A5291C776B2900D21581 /* Line.swift */; };
 		174FD2BC1C7F73F400888A94 /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174FD2BB1C7F73F400888A94 /* OptionsController.swift */; };
+		2300D0A91CDE6E8D0033E51C /* LoadingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2300D0A81CDE6E8D0033E51C /* LoadingTableViewController.swift */; };
+		2300D0AB1CDE72350033E51C /* LoadingViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2300D0AA1CDE72350033E51C /* LoadingViewTableCell.swift */; };
 		3F0ED5681CCA7D4600DCFC58 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0ED5671CCA7D4600DCFC58 /* Custom.swift */; };
 		501C2ED71CDD60B7002C11BC /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C2ED61CDD60B7002C11BC /* UIImageExtensions.swift */; };
 		5048B07D1CDC0BCB006B7FA6 /* Shape.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5048B07B1CDC0BCB006B7FA6 /* Shape.xcdatamodeld */; };
@@ -30,6 +32,8 @@
 		17386F121C91E73500DD0B05 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		1743A5291C776B2900D21581 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		174FD2BB1C7F73F400888A94 /* OptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
+		2300D0A81CDE6E8D0033E51C /* LoadingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableViewController.swift; sourceTree = "<group>"; };
+		2300D0AA1CDE72350033E51C /* LoadingViewTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewTableCell.swift; sourceTree = "<group>"; };
 		3F0ED5671CCA7D4600DCFC58 /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		501C2ED61CDD60B7002C11BC /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		5048B07C1CDC0BCB006B7FA6 /* Shape.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shape.xcdatamodel; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 				83CE6E221C6C0BB80050A876 /* Oval.swift */,
 				17386F121C91E73500DD0B05 /* Options.swift */,
 				3F0ED5671CCA7D4600DCFC58 /* Custom.swift */,
+				2300D0AA1CDE72350033E51C /* LoadingViewTableCell.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -78,6 +83,7 @@
 				8301EBB91C6C06C8005F7DA7 /* DrawingView.swift */,
 				17386F101C91E60700DD0B05 /* PreviewView.swift */,
 				174FD2BB1C7F73F400888A94 /* OptionsController.swift */,
+				2300D0A81CDE6E8D0033E51C /* LoadingTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -195,11 +201,13 @@
 				8301EBBA1C6C06C8005F7DA7 /* DrawingView.swift in Sources */,
 				8301EBAA1C6C06AD005F7DA7 /* ViewController.swift in Sources */,
 				3F0ED5681CCA7D4600DCFC58 /* Custom.swift in Sources */,
+				2300D0AB1CDE72350033E51C /* LoadingViewTableCell.swift in Sources */,
 				5048B07D1CDC0BCB006B7FA6 /* Shape.xcdatamodeld in Sources */,
 				17386F111C91E60700DD0B05 /* PreviewView.swift in Sources */,
 				501C2ED71CDD60B7002C11BC /* UIImageExtensions.swift in Sources */,
 				174FD2BC1C7F73F400888A94 /* OptionsController.swift in Sources */,
 				8301EBA81C6C06AD005F7DA7 /* AppDelegate.swift in Sources */,
+				2300D0A91CDE6E8D0033E51C /* LoadingTableViewController.swift in Sources */,
 				83CE6E231C6C0BB80050A876 /* Oval.swift in Sources */,
 				8301EBBE1C6C0897005F7DA7 /* Rect.swift in Sources */,
 				1743A52A1C776B2900D21581 /* Line.swift in Sources */,
