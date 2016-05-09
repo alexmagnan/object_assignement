@@ -337,6 +337,24 @@ class ViewController: UIViewController,OptionSetting{
         }
     }
     
+    @IBAction func unwindToVC(segue: UIStoryboardSegue) {
+        
+        if segue.identifier == "loadAndShowDrawing" {
+            
+            if let vc = segue.sourceViewController as? LoadingTableViewController {
+                
+                
+            
+                self.drawingView.shapes = vc.drawingToLoad
+                self.drawingView.setNeedsDisplay()
+                
+            }
+            
+        }
+    
+    }
+
+    
     func doubleTapped() {
        drawingView.doubleTapped()
     }
@@ -350,9 +368,6 @@ class ViewController: UIViewController,OptionSetting{
     func getShapeType() -> NSInteger{
         return shapeType
     }
-    
-    
-    
 
 }
 

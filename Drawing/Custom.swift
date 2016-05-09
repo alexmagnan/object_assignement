@@ -105,17 +105,26 @@ class Custom:Shape {
         CGContextStrokePath(context)
     }
     required convenience init?(coder decoder: NSCoder) {
-        guard let points = decoder.decodeObjectForKey("points") as? [CGPoint],
-            let x = decoder.decodeObjectForKey("x") as? Double,
+        
+        var pointsAsCGPoints = [CGPoint]()
+        
+        guard let x = decoder.decodeObjectForKey("x") as? Double,
             let y = decoder.decodeObjectForKey("y") as? Double,
-            let o = decoder.decodeObjectForKey("o") as? Options
+            let o = decoder.decodeObjectForKey("o") as? Options,
+            let pointsAsStrings = decoder.decodeObjectForKey("pointsAsStrings") as? [String]
             else { return nil }
         
+        for point in pointsAsStrings {
+            
+            pointsAsCGPoints.append(CGPointFromString(point))
+            
+        }
+    
         self.init (
             X: x,
             Y: y,
             mOptions: o,
-            points: points
+            points: pointsAsCGPoints
         )
     }
     
@@ -156,6 +165,16 @@ class Custom:Shape {
         coder.encodeObject(self.X, forKey: "x")
         coder.encodeObject(self.Y, forKey: "y")
         coder.encodeObject(self.mOptions, forKey: "o")
-//        coder.encodeObject(self.points, forKey: "points")
+        
+        var pointsAsStrings = [String]()
+        
+        for point in self.points {
+            
+            pointsAsStrings.append(NSStringFromCGPoint(point))
+            
+        }
+        
+        coder.encodeObject(pointsAsStrings, forKey: "pointsAsStrings")
+        
     }
 }

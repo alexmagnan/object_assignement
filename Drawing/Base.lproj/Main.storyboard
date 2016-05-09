@@ -137,17 +137,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="NcS-tK-iaJ">
-                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="drawingPreviewCell" rowHeight="150" id="yaa-oy-MsU" customClass="LoadingViewTableCell" customModule="Drawing" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="600" height="150"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaa-oy-MsU" id="ECj-Uz-kmY">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ur3-cL-hd0">
@@ -178,6 +173,7 @@
                                 <connections>
                                     <outlet property="drawingTitle" destination="Bon-1g-FEI" id="YCq-AT-AAh"/>
                                     <outlet property="previewImage" destination="ur3-cL-hd0" id="Sr1-5k-eFk"/>
+                                    <segue destination="gKv-5u-RjY" kind="unwind" identifier="loadAndShowDrawing" unwindAction="unwindToVC:" id="EV7-A7-61e"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -186,11 +182,9 @@
                             <outlet property="delegate" destination="phD-Pt-qah" id="Ri0-dK-2Lf"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="searchBar" destination="NcS-tK-iaJ" id="5a4-kB-gPE"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Vf-28-wGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gKv-5u-RjY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2102" y="477"/>
         </scene>
