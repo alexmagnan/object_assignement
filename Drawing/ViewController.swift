@@ -19,7 +19,7 @@ enum shapeTypes {
 }
 
 
-class ViewController: UIViewController,OptionSetting{
+class ViewController: UIViewController,OptionSetting {
     var shapeType = 0
     var selectorType = 0;
     
@@ -248,10 +248,6 @@ class ViewController: UIViewController,OptionSetting{
                             
                                 let previewImage = UIImagePNGRepresentation(previewImageTmp)
                             
-                            
-                            
-                            
-                            
                                 data?.setValue(shapes, forKey: "shapes")
                                 data?.setValue(previewImage, forKey: "previewImage")
                             
@@ -263,30 +259,10 @@ class ViewController: UIViewController,OptionSetting{
                         }
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                     }))
-                    
-                    
-                    
-                    
-                    
-                    
                     
                     alertView.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
                     self.presentViewController(alertView, animated: true, completion: nil)
-                    
-                    //TODO: Overwrite functionality
-                    
                     
                 }
                 
@@ -362,6 +338,47 @@ class ViewController: UIViewController,OptionSetting{
             
         }
     }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        
+        
+        if identifier == "loadDrawing" {
+            
+            print(drawingView.shapes.count)
+            
+            if drawingView.shapes.isEmpty {
+                return true
+            } else {
+                
+                let alertView = UIAlertController(title: "Warning", message: "All unsaved changes will be lost.", preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "Got it", style: .Destructive, handler: {
+                    
+                    UIAlertAction in
+                    
+                    self.performSegueWithIdentifier("loadDrawing", sender: nil)
+                    self.drawingView.shapes = [Shape]()
+                    self.drawingView.setNeedsDisplay()
+                    
+
+                }))
+                
+                alertView.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
+                
+                return false
+                
+            }
+            
+            
+        } else {
+            
+            return true
+            
+        }
+        
+    }
+    
+    
     
     @IBAction func unwindToVC(segue: UIStoryboardSegue) {
         

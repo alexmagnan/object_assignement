@@ -220,8 +220,7 @@ class LoadingTableViewController: UITableViewController {
         self.drawingToLoad = self.drawings[indexPath.row]
         self.drawingTitleToLoad = self.drawingTitles[indexPath.row]
         
-        
-        print(self.drawingToLoad)
+//        print(self.drawingToLoad)
         
         return indexPath
     }
