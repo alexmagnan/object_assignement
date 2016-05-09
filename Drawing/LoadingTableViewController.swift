@@ -13,6 +13,7 @@ class LoadingTableViewController: UITableViewController {
 
     var drawingTitles = [String]()
     var drawingToLoad = [Shape]()
+    var drawingTitleToLoad:String?
     var previews = [UIImage]()
     var drawings = [[Shape]]()
     
@@ -118,7 +119,75 @@ class LoadingTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            
+            var fetchRequest = NSFetchRequest(entityName: "Drawing")
+            
+            fetchRequest.predicate = NSPredicate(format: "name == %@", drawingTitles[indexPath.row])
+            
+            let managedContext = appDelegate.managedObjectContext
+            
+            do {
+                let results =
+                    try managedContext.executeFetchRequest(fetchRequest)
+
+                let data = results as? [NSManagedObject]
+                
+                managedContext.deleteObject(data![0])
+                
+            } catch let error as NSError {
+                print("Could not fetch \(error), \(error.userInfo)")
+            }
+
+            var newData = [NSManagedObject]()
+            
+            //2
+            //fetchRequest = nil
+            fetchRequest = NSFetchRequest(entityName: "Drawing")
+            
+            
+            //MARK: Load the new data
+            
+            drawingTitles = [String]()
+            previews = [UIImage]()
+            drawings = [[Shape]]()
+            
+            
+            do {
+                let results =
+                    try managedContext.executeFetchRequest(fetchRequest)
+                newData = results as! [NSManagedObject]
+                
+                for i in newData {
+                    
+                    drawingTitles.append(i.valueForKey("name") as! String)
+                    let previewImageData = (i.valueForKey("previewImage") as? NSData)
+                    
+                    //print(previewImageData)
+                    
+                    let previewImage = UIImage(data: previewImageData!)
+                    previews.append(previewImage!)
+                    
+                    let shapeData = i.valueForKey("shapes") as? NSData
+                    let drawing = NSKeyedUnarchiver.unarchiveObjectWithData(shapeData!) as? [Shape]
+                    
+                    drawings.append(drawing!)
+                    
+                }
+                
+            } catch let error as NSError {
+                print("Could not fetch \(error), \(error.userInfo)")
+            }
+
+            
+            
+            
+            tableView.reloadData()
+            
+            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             
             
             
@@ -149,6 +218,7 @@ class LoadingTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         self.drawingToLoad = self.drawings[indexPath.row]
+        self.drawingTitleToLoad = self.drawingTitles[indexPath.row]
         
         
         print(self.drawingToLoad)
